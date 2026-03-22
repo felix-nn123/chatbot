@@ -1,23 +1,23 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowUpIcon } from 'lucide-react';
 
 import './App.css';
 
 function App() {
    const [message, setMessage] = useState('');
+
    useEffect(() => {
       fetch('/api')
-         .then((res) => res.text())
-         .then((data) => setMessage(data));
+         .then((response) => response.json())
+         .then((data) => setMessage(data.message))
+         .catch((error) => console.error('Error fetching message:', error));
    }, []);
    return (
       <div className="p-4">
-         <p className="font-bold p-4 text-3xl">{message}</p>
+         <h1 className="text-3xl font-bold underline">
+            {message || 'Loading...'}
+         </h1>
          <Button variant="outline">Button</Button>
-         {/* <Button variant="outline" size="icon" aria-label="Submit">
-        <ArrowUpIcon />
-      </Button> */}
       </div>
    );
 }
