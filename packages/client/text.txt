@@ -42,3 +42,117 @@ scripts:{
 }
 
 root terminal-> bun run dev
+
+////installing Tailwindcss in our project
+tailwindcss.com/docs/installation/using-vite
+
+bun add tailwindcss @tailwindcss/vite
+
+=>vite.config.ts
+import tailwindcss from '@tailwindcss/vite'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [
+    react(), 
+    //the tailwindcss plugin
+    tailwindcss()
+    ],
+})
+
+=>index.css
+@import "tailwindcss"
+
+=> install tailwind extension in vscode to get autocompletion
+
+
+//////Setting Shadcn
+=>ui.shadcn.com/docs/installation/vite
+
+=> we modify two of our json files ie tsconfig.json and tsconfig.app.json
+
+=>tsconfig.json
+"compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
+  }
+
+  =>tsconfig.app.json
+  "compilerOptions":{
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  }
+
+
+=>Formatting Code with Prettier
+- create a new file call .prettierrc in the root
+
+.prettierrc
+{
+    "singleQuote": true,
+    "semi": true,
+    "trailingComma": "es5",
+    "printWidth": 80,
+    "tabWidth": 3
+}
+
+* we can also formate our code from the command line, this is import to format
+our code before sharing it to others
+
+- run bun add -d prettier (in root)
+-in package.json we add a script
+
+package.json
+{
+"script":{
+    "format":"prettier --write ."
+}
+}
+
+- we ignore formating files in our node_modules and bun.lock, so we create a new file
+called .prettierignore
+
+.prettierignore
+node_modules
+bun.lock
+
+-> run : bun run format
+
+=> Automating pre-commit checks with Husky
+typicode.github.io/husky
+
+- what if we forget to run the prettier command before making commit to github
+this is where husky comes in. with husky we can automate our git workflow such
+as formating our code or running test before committing our code to github
+
+- run : bun add --dev husky
+- run : bunx husky init
+
+in our pre-commit file in .husky, add the command
+- bun run format
+
+with the above command it would format our entire code base and not just the file
+where the changes is made hence we use "lint-staged"
+
+-run : bun add -d lint-staged
+
+in our pre-commit file in .husky we replace "bun run format" with "bunx lint-staged"
+
+in the root of the project, we add a new file called ".lintstagedrc"
+
+
+=>.lintstagedrc
+{
+    "*.{js,jsx,ts,tsx}": [
+        "eslint --fix",
+        "prettier --write"
+    ]
+}
