@@ -1,0 +1,6 @@
+//some bun commands
+-> bun.sh for documentation
+bun init
+bun add express // to add packages
+bun run index.ts //to start the project
+bun run index.ts --watch // to continuously watching our project

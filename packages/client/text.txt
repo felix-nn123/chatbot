@@ -1,0 +1,44 @@
+Vite.dev/guide -> bun -> bun create vite
+//connect to the backend
+
+go to vite.config.ts
+export default defineConfig({
+  plugins: [react()],
+  ///we connect to our server
+  server:{
+    proxy:{
+     '/api': 'http://localhost:3000'   
+    }
+  }
+})
+
+///running the frontend and backend using a separate command rather than running
+// each separately by using concurrently
+bun add concurrently
+
+in the index.ts of the root directory
+index.ts
+import concurrently from "concurrently"
+
+concurrently([
+  {
+    name:'server',
+    command:'bun run dev',
+    cwd:'packages/server',
+    prefixColor:'cyan'
+  },
+    {
+    name:'client',
+    command:'bun run dev',
+    cwd:'packages/client',
+    prefixColor:'green'
+  }  
+])
+
+next we define a custom script in the package.json file of our root directory
+package.json
+scripts:{
+    dev:"bun run index.ts"
+}
+
+root terminal-> bun run dev
