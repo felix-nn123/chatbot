@@ -156,3 +156,12 @@ in the root of the project, we add a new file called ".lintstagedrc"
         "prettier --write"
     ]
 }
+
+=>there are 3 types of providing prompt
+1) Zero-shot:give the model a task with no example and all the model to figure it out
+2) One-shot:you give the model a single example to tell the model what to return
+3) Few-shot:you give the model few examples to the tell the model what to retrun
+
+
+///this help you train you your LLm or chatbot
+https://platform.openai.com/chat/edit?models=gpt-4.1

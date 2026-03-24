@@ -1,15 +1,15 @@
 import express from 'express';
 import type { Request, Response } from 'express';
 import dotenv from 'dotenv';
+import routerChat from './routes';
 
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 const port = process.env.PORT || 3000;
 
-app.get('/api', (req: Request, res: Response) => {
-   res.send({ message: 'Hello World!!' });
-});
+app.use('/api', routerChat);
 
 app.listen(port, () => {
    console.log(`Server is listening on http://localhost:${port}`);
